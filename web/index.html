@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Explore the public TLS certificate history of a domain.">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://crt.sh; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Certificate Trail · CoolCode.ca</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+<script type="module" src="./app.mjs"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to certificate lookup</a>
+<header class="mast"><div class="wrap"><a class="brand" href="https://coolcode.ca/#workbench"><b aria-hidden="true">&gt;_</b>CoolCode<em>.ca</em></a><button id="theme" type="button" aria-pressed="false">Dark mode</button></div></header>
+<main id="main">
+<section class="hero"><div class="wrap">
+  <div><p class="eyebrow">Certificate Transparency</p><h1>Certificate <em>Trail</em></h1><p class="lead">Follow the names and issuers that appear in the public certificate history of a domain.</p></div>
+  <form id="lookup" class="terminal">
+    <label for="domain">Domain or subdomain</label>
+    <div class="input-line"><input id="domain" type="text" placeholder="coolcode.ca" maxlength="253" spellcheck="false" autocomplete="off" required><button id="submit" type="submit" class="primary">Search crt.sh</button></div>
+    <div class="samples" aria-label="Lookup options"><button id="example" type="button">Try coolcode.ca</button><button id="import" type="button">Import JSON</button><a id="original" class="small" href="https://crt.sh/" target="_blank" rel="noopener noreferrer">Open crt.sh ↗</a></div>
+    <input type="file" id="file" accept=".json,application/json,.txt,text/plain" hidden>
+    <p class="small">Live searches send the domain to crt.sh. JSON imports stay in this tab and use the domain above as a filter.</p>
+  </form>
+</div></section>
+<div class="wrap bench">
+  <p id="status" class="state" role="status" aria-live="polite">Enter a domain to look up its certificate history, or enter the domain and import a crt.sh JSON array.</p>
+  <section class="report" id="report" aria-labelledby="result-title" hidden>
+    <header class="report-head"><div><h2 id="result-title"></h2><p class="muted" id="provenance"></p></div><div class="actions"><button id="export" type="button">Export filtered CSV</button><a id="raw" target="_blank" rel="noopener noreferrer">Source JSON ↗</a></div></header>
+    <dl class="stats"><div><dt>Source rows</dt><dd id="source-count"></dd></div><div><dt>Matching certificates</dt><dd id="cert-count"></dd></div><div><dt>Distinct names</dt><dd id="name-count"></dd></div><div><dt>Issuer strings</dt><dd id="issuer-count"></dd></div></dl>
+    <section class="panel"><header class="panel-head"><h3>Validity timeline</h3><p class="muted">Count by validity start year in UTC. Choose a year to filter the list.</p></header><div class="panel-body"><ul id="years" class="timeline"></ul></div></section>
+    <div class="grid">
+      <section class="panel" aria-labelledby="records-title">
+        <header class="panel-head"><h3 id="records-title">Certificate records</h3><p class="muted">Precertificate and certificate copies with the same issuer and serial number are grouped.</p></header>
+        <div class="panel-body filters">
+          <label class="field">Name or issuer<input id="filter" type="search" placeholder="example or Let's Encrypt"></label>
+          <label class="field">Validity<select id="validity"><option value="">All</option><option value="valid">In date window</option><option value="expired">Expired</option><option value="future">Future</option><option value="unknown">Unknown</option></select></label>
+          <label class="field">Start year<select id="year"><option value="">All years</option></select></label>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th scope="col">Record / issuer</th><th scope="col">In-scope names</th><th scope="col">Validity (UTC)</th></tr></thead><tbody id="records"></tbody></table></div>
+        <div class="panel-body row"><button id="more-certs" type="button">Show more certificates</button><p id="cert-detail" class="muted" aria-live="polite"></p></div>
+      </section>
+      <section class="panel" aria-labelledby="names-title">
+        <header class="panel-head"><h3 id="names-title">Names in these records</h3><p class="muted">Counts reflect the current certificate filters. Wildcard names are shown literally.</p></header>
+        <div class="table-wrap"><table><thead><tr><th scope="col">Name</th><th scope="col">Certificates</th></tr></thead><tbody id="names"></tbody></table></div>
+        <div class="panel-body"><button id="more-names" type="button">Show more names</button></div>
+      </section>
+    </div>
+  </section>
+  <section class="panel" aria-labelledby="method"><header class="panel-head"><h2 id="method">Reading Certificate Transparency</h2></header><div class="panel-body">
+    <p>Logs contain historical certificate and precertificate entries. A logged name may be stale, a wildcard, or a name that never had a publicly reachable service. A date window alone says nothing about revocation or current deployment.</p>
+    <p>Live lookups use the community-operated <a href="https://crt.sh/">crt.sh</a> service. Its <a href="https://groups.google.com/g/crtsh/c/IIb3h_v-P20/m/PJfiOc5PFQAJ">JSON interface is undocumented</a> and can be slow. Narrow large searches or use the source link if a search fails. See <a href="https://www.rfc-editor.org/rfc/rfc9162.html">RFC 9162</a> for CT background.</p>
+  </div></section>
+</div>
+</main>
+<footer class="footer"><div class="wrap"><span>CoolCode.ca · Certificate Trail</span><nav aria-label="Sources"><a href="https://crt.sh/">crt.sh ↗</a><a href="https://coolcode.ca/dnslens/">DNS Lens</a><a href="https://github.com/jsdyer/certtrail">Source code ↗</a></nav></div></footer>
+</body></html>
