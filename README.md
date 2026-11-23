@@ -1,5 +1,9 @@
 # Certificate Trail
 
+<!-- coolcode:guide -->
+Enter a domain, then filter certificate names and issuers or export matching records as CSV. If the live query fails, import a crt.sh JSON array for the same domain; validity dates and CT history do not establish current deployment or revocation status.
+<!-- /coolcode:guide -->
+
 Explore the public TLS certificate history of a domain or subdomain from a statically hosted browser app. Search live with crt.sh or enter the domain and import a crt.sh JSON array on the device. A validity-start-year timeline, name and issuer filters, deduplicated certificate records, name counts and a filtered CSV export help make historical results readable.
 
 ## Build and test

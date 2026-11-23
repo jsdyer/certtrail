@@ -1,0 +1,23 @@
+{
+  "id": "certtrail",
+  "title": "Certificate Trail",
+  "description": "Trace issued certificates, names, issuers and dates across certificate transparency logs.",
+  "category": "liminal-tools",
+  "tags": [
+    "certificate",
+    "transparency",
+    "tls",
+    "ssl",
+    "crt.sh",
+    "subdomains"
+  ],
+  "icon": "file-badge",
+  "url": "/certtrail/",
+  "source": "https://github.com/jsdyer/certtrail",
+  "hosting": "project",
+  "access": "browser",
+  "data_info": {
+    "mode": "mixed",
+    "detail": "Certificate records come from a live crt.sh search or a JSON file you import."
+  }
+}
